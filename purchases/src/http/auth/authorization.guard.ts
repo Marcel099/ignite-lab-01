@@ -6,14 +6,14 @@ import { promisify } from "node:util"
 
 @Injectable()
 export class AuthorizationGuard implements CanActivate {
-  private AUTHO_AUDIENCE: string;
-  private AUTHO_DOMAIN: string;
+  private AUTH0_AUDIENCE: string;
+  private AUTH0_DOMAIN: string;
 
   constructor(
     private configService: ConfigService,
   ) {
-    this.AUTHO_AUDIENCE = this.configService.get('AUTHO_AUDIENCE') ?? '';
-    this.AUTHO_DOMAIN = this.configService.get('AUTHO_DOMAIN') ?? '';
+    this.AUTH0_AUDIENCE = this.configService.get('AUTH0_AUDIENCE') ?? '';
+    this.AUTH0_DOMAIN = this.configService.get('AUTH0_DOMAIN') ?? '';
   }
 
   async canActivate(
@@ -30,10 +30,10 @@ export class AuthorizationGuard implements CanActivate {
           cache: true,
           rateLimit: true,
           jwksRequestsPerMinute: 5,
-          jwksUri: `${this.AUTHO_DOMAIN}.well-known/jwks.json`
+          jwksUri: `${this.AUTH0_DOMAIN}.well-known/jwks.json`
         }),
-        audience: this.AUTHO_AUDIENCE,
-        issuer: this.AUTHO_DOMAIN,
+        audience: this.AUTH0_AUDIENCE,
+        issuer: this.AUTH0_DOMAIN,
         algorithms: ['RS256'],
       })
     )

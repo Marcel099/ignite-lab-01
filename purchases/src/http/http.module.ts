@@ -3,7 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 import { TestController } from 'src/test/test.controller';
 
 @Module({
-  imports: [ConfigModule.forRoot()],
+  imports: [ConfigModule.forRoot(), DatabaseModule],
   controllers: [TestController]
 })
 export class HttpModule {}

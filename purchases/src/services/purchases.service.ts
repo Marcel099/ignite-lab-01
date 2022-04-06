@@ -41,13 +41,11 @@ export class PurchasesService {
       throw new Error('Product not found.')
     }
 
-    const purchase = await this.prisma.purchase.create({
+    return await this.prisma.purchase.create({
       data: {
         customerId,
         productId,
       }
     })
-
-    return purchase;
   }
 }

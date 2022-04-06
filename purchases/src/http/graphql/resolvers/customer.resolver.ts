@@ -22,6 +22,6 @@ export class CustomersResolver {
 
   @ResolveField()
   purchase(@Parent() customer: Customer) {
-    return this.purchasesService.listPurchasesFromCustomer(customer.id)
+    return this.purchasesService.listPurchasesByCustomerId(customer.id)
   }
 }

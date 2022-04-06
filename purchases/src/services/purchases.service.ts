@@ -1,11 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import slugify from "slugify";
 
 import { PrismaService } from "../database/prisma/prisma.service";
 
 interface CreatePurchaseDTO {
-  title: string;
-
+  customerId: string;
+  productId: string;
 } 
 
 @Injectable()
@@ -18,5 +17,26 @@ export class PurchasesService {
         createdAt: 'desc'
       }
     });
+  }
+
+  async createPurchase({ customerId, productId }: CreatePurchaseDTO) {
+    const product = await this.prisma.product.findUnique({
+      where: {
+        id: productId,
+      }
+    })
+
+    if (!product) {
+      throw new Error('Product not found.')
+    }
+
+    const purchase = await this.prisma.purchase.create({
+      data: {
+        customerId,
+        productId,
+      }
+    })
+
+    return purchase;
   }
 }

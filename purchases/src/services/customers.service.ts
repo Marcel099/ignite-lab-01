@@ -10,7 +10,7 @@ interface CreateCustomerDTO {
 export class CustomersService {
   constructor(private prisma: PrismaService) {}
 
-  getProductByAuthUserId(authUserId: string) {
+  getCustomerByAuthUserId(authUserId: string) {
     return this.prisma.customer.findUnique({
       where: {
         authUserId,

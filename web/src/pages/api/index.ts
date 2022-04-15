@@ -4,20 +4,17 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 export const config = {
   api: {
-    bodyParser: false,
+    bodyParser: false
   }
 }
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { accessToken } = await getAccessToken(req, res);
 
   return httpProxyMiddleware(req, res, {
-    target: 'http://localhost:3332/graphq',
+    target: 'http://localhost:3332/graphql',
     headers: {
-      'Authorizantion': `Bearer ${accessToken}`
+      'Authorization': `Bearer ${accessToken}`
     }
   })
-}
+} 

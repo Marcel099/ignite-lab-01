@@ -3,16 +3,16 @@ import { CalendarIcon } from "@heroicons/react/solid";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { GetStaticProps } from "next";
-import { withPublicApollo } from "../lib/withPublicApollo";
-import { getServerPageGetProducts, ssrGetProducts } from "../graphql/generated/page";
-import { GetProductsQuery } from "../graphql/generated/graphql";
+import { withApollo } from "../lib/withApollo";
+import { getServerPageGetProducts, ssrGetProducts } from "../graphql/generated/pagePublic";
+import { GetProductsQuery, useCreatePurchaseMutation } from "../graphql/generated/graphql";
 
 interface EnrollProps {
   data: GetProductsQuery;
 }
 
 function Enroll({ data }: EnrollProps) {
-  const [createPurchase] = ['sample' as any]  // useCreatePurchaseMutation()
+  const [createPurchase] = useCreatePurchaseMutation()
 
   async function handlePurchaseProduct(productId: string) {
     await createPurchase({
@@ -82,6 +82,6 @@ export const getStaticProps: GetStaticProps = async ({  }) => {
   }
 }
 
-export default withPublicApollo(
+export default withApollo(
   ssrGetProducts.withPage()(Enroll)
 )
